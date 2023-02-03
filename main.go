@@ -1,13 +1,7 @@
 package main
 
-import (
-	"dictionary-go/dataoutput"
-	"dictionary-go/dictionary"
-)
+import "dictionary-go/ui/console"
 
 func main() {
-	//Пример просмотра словаря
-	exampleDictionary := dictionary.NewDictionary("exampleName")
-
-	dataoutput.DictionaryOutput(*exampleDictionary)
+	console.RunUi()
 }
