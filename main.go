@@ -10,7 +10,7 @@ func main() {
 	//Пример инициалиации словаря
 	exampleDictionary := dictionary.NewDictionary("exampleName")
 
-	//Пример добавление в словарь
+	//Пример добавление слова в словарь
 	datasource.AddWord(exampleDictionary, "name", "1234")
 	//Пример просмотора словаря
 	dataoutput.DictionaryOutput(*exampleDictionary)
