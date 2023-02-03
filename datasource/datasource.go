@@ -5,6 +5,6 @@ import (
 )
 
 //Создает новую запись в словарь
-func AddNewIssue(dictionary *dictionary.Dictionary, word, translate string) {
+func AddWord(dictionary *dictionary.Dictionary, word, translate string) {
 	dictionary.WordMap()[word] = translate
 }

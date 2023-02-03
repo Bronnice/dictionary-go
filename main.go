@@ -11,7 +11,7 @@ func main() {
 	exampleDictionary := dictionary.NewDictionary("exampleName")
 
 	//Пример добавление в словарь
-	datasource.AddNewIssue(exampleDictionary, "name", "1234")
+	datasource.AddWord(exampleDictionary, "name", "1234")
 	//Пример просмотора словаря
 	dataoutput.DictionaryOutput(*exampleDictionary)
 }
