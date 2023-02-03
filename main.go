@@ -7,9 +7,11 @@ import (
 )
 
 func main() {
-	//Пример просмотра словаря
+	//Пример инициалиации словаря
 	exampleDictionary := dictionary.NewDictionary("exampleName")
 
-	datasource.AddNewIssue(*exampleDictionary, "name", "1234")
+	//Пример добавление в словарь
+	datasource.AddNewIssue(exampleDictionary, "name", "1234")
+	//Пример просмотора словаря
 	dataoutput.DictionaryOutput(*exampleDictionary)
 }
