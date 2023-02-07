@@ -20,6 +20,6 @@ func (dic *Dictionary) WordMap() map[string]string {
 }
 
 //Добавляет новое слово и его значение  в словарь
-func (dictionary Dictionary) AddWord(word, translate string) {
+func (dictionary *Dictionary) AddWord(word, translate string) {
 	dictionary.WordMap()[word] = translate
 }
