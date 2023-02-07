@@ -15,6 +15,11 @@ func NewDictionary() *Dictionary {
 }
 
 //Получить список слов
-func (dic *Dictionary) WordMap() map[string]string {
-	return dic.wordMap
+func (dictionary *Dictionary) WordMap() map[string]string {
+	return dictionary.wordMap
+}
+
+//Добавляет новое слово и его значение  в словарь
+func (dictionary *Dictionary) AddWord(word, translate string) {
+	dictionary.wordMap[word] = translate
 }
