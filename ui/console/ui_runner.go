@@ -6,7 +6,7 @@ import (
 )
 
 var helpMessage string = "Введите help - для помощи"
-var inputIssueMessage string = "Ошибка ввода!"
+var inputErrorMessage string = "Ошибка ввода!"
 
 //Запуск UI
 func RunUi() {
@@ -56,16 +56,22 @@ func help() {
 func add(dictionary dictionary.Dictionary) {
 	Println("Введите слово: ")
 	word, err := ReadLine()
-	if err != nil {
-		Println(inputIssueMessage)
+	if !errorHandler(err) {
 		return
 	}
 	Println("Введите перевод: ")
 	translate, err := ReadLine()
-	if err != nil {
-		Println(inputIssueMessage)
+	if !errorHandler(err) {
 		return
 	}
 	dictionary.AddWord(word, translate)
 	Println("Запись добавлена!")
+}
+
+func errorHandler(err error) bool {
+	if err != nil {
+		return true
+	}
+	Println(inputErrorMessage)
+	return false
 }
