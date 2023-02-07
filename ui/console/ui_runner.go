@@ -60,14 +60,12 @@ func help() {
 func add(dictionary *dictionary.Dictionary) error {
 	Println("Введите слово: ")
 	word, err := ReadLine()
-
 	if err != nil {
 		return err
 	}
 
 	Println("Введите перевод: ")
 	translate, err := ReadLine()
-
 	if err != nil {
 		return err
 	}
