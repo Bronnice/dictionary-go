@@ -18,3 +18,8 @@ func NewDictionary() *Dictionary {
 func (dic *Dictionary) WordMap() map[string]string {
 	return dic.wordMap
 }
+
+//Добавляет новое слово и его значение  в словарь
+func (dictionary Dictionary) AddWord(word, translate string) {
+	dictionary.WordMap()[word] = translate
+}

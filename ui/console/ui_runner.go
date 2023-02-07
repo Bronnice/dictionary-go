@@ -1,12 +1,12 @@
 package console
 
 import (
-	"dictionary-go/datasource"
 	"dictionary-go/dictionary"
 	"strings"
 )
 
 var helpMessage string = "Введите help - для помощи"
+var inputIssueMessage string = "Ошибка ввода!"
 
 //Запуск UI
 func RunUi() {
@@ -55,9 +55,17 @@ func help() {
 //Добавление новой пары в словарь
 func add(dictionary dictionary.Dictionary) {
 	Println("Введите слово: ")
-	word, _ := ReadLine()
+	word, err := ReadLine()
+	if err != nil {
+		Println(inputIssueMessage)
+		return
+	}
 	Println("Введите перевод: ")
-	translate, _ := ReadLine()
-	datasource.AddWord(&dictionary, word, translate)
+	translate, err := ReadLine()
+	if err != nil {
+		Println(inputIssueMessage)
+		return
+	}
+	dictionary.AddWord(word, translate)
 	Println("Запись добавлена!")
 }
