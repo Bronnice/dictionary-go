@@ -1,17 +1,18 @@
 package console
 
 import (
+	"dictionary-go/datasource"
 	"dictionary-go/dictionary"
 	"strings"
 )
 
-var printHelp string = "Введите help - для помощи"
+var helpMessage string = "Введите help - для помощи"
 
 //Запуск UI
 func RunUi() {
 	dictionary := dictionary.NewDictionary()
 
-	Println(printHelp)
+	Println(helpMessage)
 	for {
 		input, err := ReadLine()
 		if err != nil {
@@ -30,8 +31,10 @@ func RunUi() {
 			PrintDictionary(dictionary)
 		case "select":
 			Println("Work in progress")
+		case "add":
+			add(*dictionary)
 		default:
-			Println("Неизвестная команда, " + printHelp)
+			Println("Неизвестная команда, " + helpMessage)
 		}
 	}
 }
@@ -47,4 +50,14 @@ func help() {
 	Println("list - список всех словарей")
 	Println("exit - прекратить работу")
 	Println("select - переключить словарь")
+}
+
+//Добавление новой пары в словарь
+func add(dictionary dictionary.Dictionary) {
+	Println("Введите слово: ")
+	word, _ := ReadLine()
+	Println("Введите перевод: ")
+	translate, _ := ReadLine()
+	datasource.AddWord(&dictionary, word, translate)
+	Println("Запись добавлена!")
 }
