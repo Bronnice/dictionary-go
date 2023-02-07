@@ -2,14 +2,14 @@ package dictionary
 
 //Структура для словаря
 type Dictionary struct {
-	Name    string
+	Number  int
 	wordMap map[string]string
 }
 
 //Конструктор для Dictionary
-func NewDictionary(name string) *Dictionary {
+func NewDictionary() *Dictionary {
 	return &Dictionary{
-		Name:    name,
+		Number:  -1,
 		wordMap: make(map[string]string),
 	}
 }
