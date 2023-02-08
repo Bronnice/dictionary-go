@@ -2,21 +2,23 @@ package console
 
 import (
 	"dictionary-go/dictionary"
+	"dictionary-go/enum"
+	"dictionary-go/validation"
 	"strings"
 )
 
 var helpMessage string = "Введите help - для помощи"
-var inputErrorMessage string = "Ошибка ввода!"
 
 //Запуск UI
 func RunUi() {
-	dictionary := dictionary.NewDictionary()
+	validator := validation.NewValidator(4, enum.NUMBERS)
+	dictionary := dictionary.NewDictionary(*validator)
 
 	Println(helpMessage)
 	for {
 		input, err := ReadLine()
 		if err != nil {
-			Println("Ошибка ввода!")
+			Println(err.Error())
 			return
 		}
 
@@ -34,7 +36,7 @@ func RunUi() {
 		case "add":
 			err = add(dictionary)
 			if err != nil {
-				Println(inputErrorMessage)
+				Println(err.Error())
 			}
 		default:
 			Println("Неизвестная команда, " + helpMessage)
@@ -63,6 +65,14 @@ func add(dictionary *dictionary.Dictionary) error {
 	if err != nil {
 		return err
 	}
+	result, err := validation.IsWordValid(&word, *dictionary.Validation())
+	if err != nil {
+		return err
+	}
+	if !*result {
+		Println("Слово не подходит по критериям!")
+		return nil
+	}
 
 	Println("Введите перевод: ")
 	translate, err := ReadLine()
@@ -70,7 +80,7 @@ func add(dictionary *dictionary.Dictionary) error {
 		return err
 	}
 
-	dictionary.AddWord(word, translate)
+	dictionary.AddWord(&word, &translate)
 	Println("Запись добавлена!")
 	return nil
 }
