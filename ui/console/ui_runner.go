@@ -2,7 +2,6 @@ package console
 
 import (
 	"dictionary-go/dictionary"
-	"dictionary-go/enum"
 	"dictionary-go/validation"
 	"strings"
 )
@@ -11,8 +10,8 @@ var helpMessage string = "Введите help - для помощи"
 
 //Запуск UI
 func RunUi() {
-	validator := validation.NewValidator(4, enum.NUMBERS)
-	dictionary := dictionary.NewDictionary(*validator)
+	validator := validation.NewEnglishDictionaryValidator()
+	dictionary := dictionary.NewDictionary(validator)
 
 	Println(helpMessage)
 	for {
@@ -65,7 +64,7 @@ func add(dictionary *dictionary.Dictionary) error {
 	if err != nil {
 		return err
 	}
-	result, err := validation.IsWordValid(&word, *dictionary.Validation())
+	result, err := validation.NewEnglishDictionaryValidator().IsWordValid(&word)
 	if err != nil {
 		return err
 	}
