@@ -3,15 +3,16 @@ package dictionary
 import (
 	"dictionary-go/validator"
 	"errors"
+	"strings"
 )
 
-//Структура для словаря
+// Структура для словаря
 type Dictionary struct {
 	wordMap   map[string]string
 	validator validator.Validator
 }
 
-//Конструктор для Dictionary
+// Конструктор для Dictionary
 func NewDictionary(validator validator.Validator) *Dictionary {
 	return &Dictionary{
 		wordMap:   make(map[string]string),
@@ -19,14 +20,14 @@ func NewDictionary(validator validator.Validator) *Dictionary {
 	}
 }
 
-//Получить список слов
+// Получить список слов
 func (dictionary *Dictionary) WordMap() map[string]string {
 	return dictionary.wordMap
 }
 
-//Добавляет новое слово и его значение  в словарь
+// Добавляет новое слово и его значение  в словарь
 func (dictionary *Dictionary) AddWord(word, translate string) error {
-	err := dictionary.validator.ValidateWord(word)
+	err := dictionary.validator.ValidateWord(strings.TrimSpace(word))
 	if err != nil {
 		return err
 	}

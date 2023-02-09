@@ -7,7 +7,7 @@ import (
 	testSuite "github.com/stretchr/testify/suite"
 )
 
-//Тесты для метода IsWordValid EnglishDictionaryValidator`a
+// Тесты для метода IsWordValid EnglishDictionaryValidator`a
 type EnglishDictionaryIsWordValidTestSuite struct {
 	testSuite.Suite
 }

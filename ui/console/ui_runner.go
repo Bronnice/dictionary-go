@@ -8,7 +8,7 @@ import (
 
 var helpMessage string = "Введите help - для помощи"
 
-//Запуск UI
+// Запуск UI
 func RunUi() {
 	validator := validator.NewEnglishDictionaryValidator()
 	dictionary := dictionary.NewDictionary(validator)
@@ -33,22 +33,19 @@ func RunUi() {
 		case "switch":
 			Println("Work in progress")
 		case "add":
-			err = add(dictionary)
-			if err != nil {
-				Println(err.Error())
-			}
+			add(dictionary)
 		default:
 			Println("Неизвестная команда, " + helpMessage)
 		}
 	}
 }
 
-//Форматирование пользовательского ввода
+// Форматирование пользовательского ввода
 func formatInput(input string) string {
 	return strings.TrimSpace(strings.ToLower(input))
 }
 
-//Отображение списка команд в коносль
+// Отображение списка команд в коносль
 func help() {
 	Println("print  - просмотр словаря")
 	Println("list - список всех словарей")
@@ -57,24 +54,27 @@ func help() {
 	Println("add - добавить новую пару слово - перевод в словарь")
 }
 
-//Добавление новой пары в словарь
-func add(dictionary *dictionary.Dictionary) error {
+// Добавление новой пары в словарь
+func add(dictionary *dictionary.Dictionary) {
 	Println("Введите слово: ")
 	word, err := ReadLine()
 	if err != nil {
-		return err
+		Println(err.Error())
+		return
 	}
 
 	Println("Введите перевод: ")
 	translate, err := ReadLine()
 	if err != nil {
-		return err
+		Println(err.Error())
+		return
 	}
 
 	err = dictionary.AddWord(word, translate)
 	if err != nil {
-		return err
+		Println(err.Error())
+		return
 	}
+
 	Println("Запись добавлена!")
-	return nil
 }

@@ -6,7 +6,7 @@ import (
 	testSuite "github.com/stretchr/testify/suite"
 )
 
-//Тесты для метода formatInput
+// Тесты для метода formatInput
 type formatInputTestSuite struct {
 	testSuite.Suite
 }
