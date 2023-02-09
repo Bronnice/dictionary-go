@@ -30,7 +30,7 @@ func RunUi() {
 			help()
 		case "print":
 			PrintDictionary(dictionary)
-		case "select":
+		case "switch":
 			Println("Work in progress")
 		case "add":
 			err = add(dictionary)
@@ -53,7 +53,7 @@ func help() {
 	Println("print  - просмотр словаря")
 	Println("list - список всех словарей")
 	Println("exit - прекратить работу")
-	Println("select - переключить словарь")
+	Println("switch - переключить словарь")
 	Println("add - добавить новую пару слово - перевод в словарь")
 }
 
@@ -65,17 +65,16 @@ func add(dictionary *dictionary.Dictionary) error {
 		return err
 	}
 
-	err = dictionary.AddWord(word, "")
-	if err != nil {
-		return err
-	}
-
 	Println("Введите перевод: ")
 	translate, err := ReadLine()
 	if err != nil {
 		return err
 	}
-	dictionary.AddWord(word, translate)
+
+	err = dictionary.AddWord(word, translate)
+	if err != nil {
+		return err
+	}
 	Println("Запись добавлена!")
 	return nil
 }

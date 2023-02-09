@@ -2,11 +2,11 @@ package dictionary
 
 import (
 	"dictionary-go/validator"
+	"errors"
 )
 
 //Структура для словаря
 type Dictionary struct {
-	Number    int
 	wordMap   map[string]string
 	Validator validator.Validator
 }
@@ -14,7 +14,6 @@ type Dictionary struct {
 //Конструктор для Dictionary
 func NewDictionary(validator validator.Validator) *Dictionary {
 	return &Dictionary{
-		Number:    -1,
 		wordMap:   make(map[string]string),
 		Validator: validator,
 	}
@@ -31,6 +30,13 @@ func (dictionary *Dictionary) AddWord(word, translate string) error {
 	if err != nil {
 		return err
 	}
+
+	for value := range dictionary.wordMap {
+		if value == word {
+			return errors.New("такое слово уже есть в словаре")
+		}
+	}
+
 	dictionary.wordMap[word] = translate
 	return nil
 }

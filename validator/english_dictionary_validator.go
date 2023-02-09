@@ -1,6 +1,7 @@
 package validator
 
 import (
+	"dictionary-go/message"
 	"errors"
 	"regexp"
 )
@@ -20,11 +21,11 @@ func NewEnglishDictionaryValidator() *EnglishDictionaryValidator {
 //Проверка подходит ли слово по критериям словаря (только английские символы, максимум 4 символа)
 func (validator EnglishDictionaryValidator) Validate(word string) error {
 	if len(word) == 0 {
-		return errors.New(enterYourWordMessage)
+		return errors.New(message.EnterYourWordMessage)
 	}
 
 	if len(word) > validator.wordCount {
-		return errors.New(wordIsLongMessage)
+		return errors.New(message.WordIsLongMessage)
 	}
 
 	isMatched, err := regexp.MatchString(`[A-Za-z]`, word)
@@ -34,7 +35,7 @@ func (validator EnglishDictionaryValidator) Validate(word string) error {
 	if isMatched {
 		return nil
 	} else {
-		return errors.New(invalidWordMessage + "Только буквы латинского алфавита!")
+		return errors.New(message.InvalidWordMessage + "Только буквы латинского алфавита!")
 	}
 
 }
