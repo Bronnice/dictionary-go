@@ -10,7 +10,8 @@ var helpMessage string = "Введите help - для помощи"
 
 //Запуск UI
 func RunUi() {
-	dictionary := dictionary.NewDictionary(validator.NewEnglishDictionaryValidator())
+	validator := validator.NewEnglishDictionaryValidator()
+	dictionary := dictionary.NewDictionary(validator)
 
 	Println(helpMessage)
 	for {
@@ -63,7 +64,8 @@ func add(dictionary *dictionary.Dictionary) error {
 	if err != nil {
 		return err
 	}
-	err = dictionary.Validator.Validate(word)
+
+	err = dictionary.AddWord(word, "")
 	if err != nil {
 		return err
 	}
@@ -73,8 +75,7 @@ func add(dictionary *dictionary.Dictionary) error {
 	if err != nil {
 		return err
 	}
-
-	dictionary.AddWord(&word, &translate)
+	dictionary.AddWord(word, translate)
 	Println("Запись добавлена!")
 	return nil
 }
