@@ -27,7 +27,7 @@ func (dictionary *Dictionary) WordMap() map[string]string {
 
 // Добавляет новое слово и его значение  в словарь
 func (dictionary *Dictionary) AddWord(word, translate string) error {
-	err := dictionary.validator.ValidateWord(strings.TrimSpace(word))
+	err := dictionary.validator.ValidateWord(strings.TrimSpace(word), strings.TrimSpace(translate))
 	if err != nil {
 		return err
 	}

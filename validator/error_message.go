@@ -1,7 +1,7 @@
 package validator
 
 var (
-	EnterYourWordMessage = "Введите слово!"
-	InvalidWordMessage   = "Cлово не подходит по критерию словаря!"
-	WordIsLongMessage    = "Слово длиннее указанного размера!"
+	EnterYourWordMessage = "Введенное значение не может быть пустым!"
+	InvalidWordMessage   = "Введенное значение не подходит по критерию словаря!"
+	WordIsLongMessage    = "Введенное значение длиннее, указанного в словаре размера!"
 )
