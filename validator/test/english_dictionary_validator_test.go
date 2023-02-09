@@ -1,4 +1,4 @@
-package test
+package validator
 
 import (
 	"dictionary-go/validator"
@@ -17,15 +17,15 @@ func Test_EnglishDictionaryIsWordValidTestSuite(t *testing.T) {
 }
 
 func (testSuite *EnglishDictionaryIsWordValidTestSuite) Test_IsWordValid_withInvalidWord_expectError() {
-	word := "1234"
-	err := validator.NewEnglishDictionaryValidator().Validate(word)
+	values := [2]string{"1234", "qwert"}
 
-	testSuite.NotNil(err)
+	for i := 0; i < len(values); i++ {
+		word := values[i]
+		err := validator.NewEnglishDictionaryValidator().Validate(word)
 
-	word = "qwert"
-	err = validator.NewEnglishDictionaryValidator().Validate(word)
+		testSuite.NotNil(err)
+	}
 
-	testSuite.NotNil(err)
 }
 
 func (testSuite *EnglishDictionaryIsWordValidTestSuite) Test_IsWordValid_withValidWord_expectTrue() {

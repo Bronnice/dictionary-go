@@ -1,7 +1,6 @@
-package test
+package console
 
 import (
-	"dictionary-go/ui/console"
 	"testing"
 
 	testSuite "github.com/stretchr/testify/suite"
@@ -19,11 +18,11 @@ func Test_formatInputTestSuite(t *testing.T) {
 func (testSuite *formatInputTestSuite) Test_formatInput_withUnformated_expectFormated() {
 	input := " ExAmPle "
 
-	testSuite.Equal("example", console.FormatInput(input))
+	testSuite.Equal("example", formatInput(input))
 }
 
 func (testSuite *formatInputTestSuite) Test_formatInput_withWhitespaces_expectEmptyString() {
 	input := "    "
 
-	testSuite.Equal("", console.FormatInput(input))
+	testSuite.Equal("", formatInput(input))
 }

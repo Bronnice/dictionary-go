@@ -21,7 +21,7 @@ func RunUi() {
 			return
 		}
 
-		input = FormatInput(input)
+		input = formatInput(input)
 
 		switch input {
 		case "exit":
@@ -44,7 +44,7 @@ func RunUi() {
 }
 
 //Форматирование пользовательского ввода
-func FormatInput(input string) string {
+func formatInput(input string) string {
 	return strings.TrimSpace(strings.ToLower(input))
 }
 

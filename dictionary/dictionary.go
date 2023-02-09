@@ -8,15 +8,19 @@ import (
 //Структура для словаря
 type Dictionary struct {
 	wordMap   map[string]string
-	Validator validator.Validator
+	validator validator.Validator
 }
 
 //Конструктор для Dictionary
 func NewDictionary(validator validator.Validator) *Dictionary {
 	return &Dictionary{
 		wordMap:   make(map[string]string),
-		Validator: validator,
+		validator: validator,
 	}
+}
+
+func (dictionary *Dictionary) Validator() validator.Validator {
+	return dictionary.validator
 }
 
 //Получить список слов
@@ -26,7 +30,7 @@ func (dictionary *Dictionary) WordMap() map[string]string {
 
 //Добавляет новое слово и его значение  в словарь
 func (dictionary *Dictionary) AddWord(word, translate string) error {
-	err := dictionary.Validator.Validate(word)
+	err := dictionary.Validator().Validate(word)
 	if err != nil {
 		return err
 	}
