@@ -1,6 +1,7 @@
 package validator
 
-//Валидация словаря
+//Валидатор словаря
 type Validator interface {
-	Validate(string) error
+	//Валидация слова
+	ValidateWord(string) error
 }

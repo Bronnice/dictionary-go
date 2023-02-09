@@ -18,7 +18,7 @@ func NewEnglishDictionaryValidator() *EnglishDictionaryValidator {
 }
 
 //Проверка подходит ли слово по критериям словаря (только английские символы, максимум 4 символа)
-func (validator EnglishDictionaryValidator) Validate(word string) error {
+func (validator EnglishDictionaryValidator) ValidateWord(word string) error {
 	if len(word) == 0 {
 		return errors.New(EnterYourWordMessage)
 	}

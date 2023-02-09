@@ -16,21 +16,21 @@ func Test_EnglishDictionaryIsWordValidTestSuite(t *testing.T) {
 	testSuite.Run(t, new(EnglishDictionaryIsWordValidTestSuite))
 }
 
-func (testSuite *EnglishDictionaryIsWordValidTestSuite) Test_IsWordValid_withInvalidWord_expectError() {
-	values := [2]string{"1234", "qwert"}
+func (testSuite *EnglishDictionaryIsWordValidTestSuite) Test_IsWordValid_withValidWord_expectNoError() {
+	word := "qwer"
+	err := validator.NewEnglishDictionaryValidator().ValidateWord(word)
 
-	for i := 0; i < len(values); i++ {
+	testSuite.NoError(err)
+}
+
+func (testSuite *EnglishDictionaryIsWordValidTestSuite) Test_IsWordValid_withInvalidWord_expectError() {
+	values := []string{"1234", "qwert"}
+
+	for i := range values {
 		word := values[i]
-		err := validator.NewEnglishDictionaryValidator().Validate(word)
+		err := validator.NewEnglishDictionaryValidator().ValidateWord(word)
 
 		testSuite.NotNil(err)
 	}
 
-}
-
-func (testSuite *EnglishDictionaryIsWordValidTestSuite) Test_IsWordValid_withValidWord_expectTrue() {
-	word := "qwer"
-	err := validator.NewEnglishDictionaryValidator().Validate(word)
-
-	testSuite.Nil(err)
 }

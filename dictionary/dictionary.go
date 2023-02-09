@@ -19,10 +19,6 @@ func NewDictionary(validator validator.Validator) *Dictionary {
 	}
 }
 
-func (dictionary *Dictionary) Validator() validator.Validator {
-	return dictionary.validator
-}
-
 //Получить список слов
 func (dictionary *Dictionary) WordMap() map[string]string {
 	return dictionary.wordMap
@@ -30,7 +26,7 @@ func (dictionary *Dictionary) WordMap() map[string]string {
 
 //Добавляет новое слово и его значение  в словарь
 func (dictionary *Dictionary) AddWord(word, translate string) error {
-	err := dictionary.Validator().Validate(word)
+	err := dictionary.validator.ValidateWord(word)
 	if err != nil {
 		return err
 	}
