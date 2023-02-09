@@ -2,7 +2,7 @@ package console
 
 import (
 	"dictionary-go/dictionary"
-	"dictionary-go/validation"
+	"dictionary-go/validator"
 	"strings"
 )
 
@@ -10,8 +10,7 @@ var helpMessage string = "Введите help - для помощи"
 
 //Запуск UI
 func RunUi() {
-	validator := validation.NewEnglishDictionaryValidator()
-	dictionary := dictionary.NewDictionary(validator)
+	dictionary := dictionary.NewDictionary(validator.NewEnglishDictionaryValidator())
 
 	Println(helpMessage)
 	for {
@@ -64,13 +63,9 @@ func add(dictionary *dictionary.Dictionary) error {
 	if err != nil {
 		return err
 	}
-	result, err := validation.NewEnglishDictionaryValidator().IsWordValid(&word)
+	err = dictionary.Validator.Validate(word)
 	if err != nil {
 		return err
-	}
-	if !*result {
-		Println("Слово не подходит по критериям!")
-		return nil
 	}
 
 	Println("Введите перевод: ")

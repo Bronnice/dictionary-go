@@ -1,32 +1,28 @@
 package dictionary
 
 import (
-	"dictionary-go/validation"
+	"dictionary-go/validator"
 )
 
 //Структура для словаря
 type Dictionary struct {
-	Number     int
-	wordMap    map[string]string
-	validation validation.Validator
+	Number    int
+	wordMap   map[string]string
+	Validator validator.Validator
 }
 
 //Конструктор для Dictionary
-func NewDictionary(validation validation.Validator) *Dictionary {
+func NewDictionary(validator validator.Validator) *Dictionary {
 	return &Dictionary{
-		Number:     -1,
-		wordMap:    make(map[string]string),
-		validation: validation,
+		Number:    -1,
+		wordMap:   make(map[string]string),
+		Validator: validator,
 	}
 }
 
 //Получить список слов
-func (dictionary *Dictionary) WordMap() *map[string]string {
-	return &dictionary.wordMap
-}
-
-func (dictionary *Dictionary) Validation() *validation.Validator {
-	return &dictionary.validation
+func (dictionary *Dictionary) WordMap() map[string]string {
+	return dictionary.wordMap
 }
 
 //Добавляет новое слово и его значение  в словарь

@@ -1,7 +1,7 @@
-package tests
+package test
 
 import (
-	"dictionary-go/validation"
+	"dictionary-go/validator"
 	"testing"
 
 	testSuite "github.com/stretchr/testify/suite"
@@ -18,24 +18,19 @@ func Test_EnglishDictionaryIsWordValidTestSuite(t *testing.T) {
 
 func (testSuite *EnglishDictionaryIsWordValidTestSuite) Test_IsWordValid_withInvalidWord_expectError() {
 	word := "1234"
-	result, err := validation.NewEnglishDictionaryValidator().IsWordValid(&word)
+	err := validator.NewEnglishDictionaryValidator().Validate(word)
 
-	testSuite.Nil(result)
+	testSuite.NotNil(err)
+
+	word = "qwert"
+	err = validator.NewEnglishDictionaryValidator().Validate(word)
+
 	testSuite.NotNil(err)
 }
 
 func (testSuite *EnglishDictionaryIsWordValidTestSuite) Test_IsWordValid_withValidWord_expectTrue() {
 	word := "qwer"
-	result, err := validation.NewEnglishDictionaryValidator().IsWordValid(&word)
+	err := validator.NewEnglishDictionaryValidator().Validate(word)
 
-	testSuite.NotNil(result)
 	testSuite.Nil(err)
-}
-
-func (testSuite *EnglishDictionaryIsWordValidTestSuite) Test_IsWordValid_withLongLenght_expectError() {
-	word := "qwert"
-	result, err := validation.NewEnglishDictionaryValidator().IsWordValid(&word)
-
-	testSuite.Nil(result)
-	testSuite.NotNil(err)
 }
