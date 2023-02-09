@@ -3,7 +3,6 @@ package dictionary
 import (
 	"dictionary-go/validator"
 	"errors"
-	"strings"
 )
 
 // Структура для словаря
@@ -27,7 +26,12 @@ func (dictionary *Dictionary) WordMap() map[string]string {
 
 // Добавляет новое слово и его значение  в словарь
 func (dictionary *Dictionary) AddWord(word, translate string) error {
-	err := dictionary.validator.ValidateWord(strings.TrimSpace(word), strings.TrimSpace(translate))
+	err := dictionary.validator.ValidateWord(word)
+	if err != nil {
+		return err
+	}
+
+	err = dictionary.validator.ValidateTranslate(translate)
 	if err != nil {
 		return err
 	}

@@ -19,9 +19,11 @@ func Test_EnglishDictionaryIsWordValidTestSuite(t *testing.T) {
 func (testSuite *EnglishDictionaryIsWordValidTestSuite) Test_IsWordValid_withValidWord_expectNoError() {
 	word := "qwer"
 	translate := "awdss"
-	err := validator.NewEnglishDictionaryValidator().ValidateWord(word, translate)
+	wordErr := validator.NewEnglishDictionaryValidator().ValidateWord(word)
+	translateErr := validator.NewEnglishDictionaryValidator().ValidateTranslate(translate)
 
-	testSuite.NoError(err)
+	testSuite.NoError(wordErr)
+	testSuite.NoError(translateErr)
 }
 
 func (testSuite *EnglishDictionaryIsWordValidTestSuite) Test_IsWordValid_withInvalidWord_expectError() {
@@ -31,9 +33,11 @@ func (testSuite *EnglishDictionaryIsWordValidTestSuite) Test_IsWordValid_withInv
 	for i := range wordValues {
 		word := wordValues[i]
 		translate := translateValues[i]
-		err := validator.NewEnglishDictionaryValidator().ValidateWord(word, translate)
+		wordErr := validator.NewEnglishDictionaryValidator().ValidateWord(word)
+		translateErr := validator.NewEnglishDictionaryValidator().ValidateTranslate(translate)
 
-		testSuite.NotNil(err)
+		testSuite.NoError(wordErr)
+		testSuite.NoError(translateErr)
 	}
 
 }
