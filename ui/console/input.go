@@ -6,9 +6,14 @@ import (
 	"strings"
 )
 
+// Форматирование пользовательского ввода
+func formatInput(input string) string {
+	return strings.TrimSpace(strings.Trim(input, "\n"))
+}
+
 // Чтение строки из консоли
 func ReadLine() (string, error) {
 	in := bufio.NewReader(os.Stdin)
 	str, err := in.ReadString('\n')
-	return strings.Trim(str, "\n"), err
+	return formatInput(str), err
 }

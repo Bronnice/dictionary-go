@@ -21,9 +21,7 @@ func RunUi() {
 			return
 		}
 
-		input = formatInput(input)
-
-		switch input {
+		switch strings.ToLower(input) {
 		case "exit":
 			return
 		case "help":
@@ -38,11 +36,6 @@ func RunUi() {
 			Println("Неизвестная команда, " + helpMessage)
 		}
 	}
-}
-
-// Форматирование пользовательского ввода
-func formatInput(input string) string {
-	return strings.TrimSpace(strings.ToLower(input))
 }
 
 // Отображение списка команд в коносль
