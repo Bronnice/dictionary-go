@@ -24,10 +24,10 @@ func (testSuite *EnglishValidateWordTestSuite) Test_ValidateWord_withValidWord_e
 }
 
 func (testSuite *EnglishValidateWordTestSuite) Test_ValidateWord_withInvalidWord_expectError() {
-	values := []string{"1234", "qwert"}
+	values := []string{"1234", "qwert", "qwe1", "    ", "qwer123"}
 
-	for i := range values {
-		word := values[i]
+	for _, value := range values {
+		word := value
 		err := validator.NewEnglishWordValidator().ValidateWord(word)
 
 		testSuite.Error(err)
