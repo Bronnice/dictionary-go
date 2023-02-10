@@ -24,9 +24,10 @@ func (testSuite *AddWordTestSuite) SetupTest() {
 }
 
 func (testSuite *AddWordTestSuite) Test_AddWord_withNewWord_expectNoError() {
-	err := testSuite.dictionary.AddWord("word", "translate")
+	word := "word"
+	err := testSuite.dictionary.AddWord(word, "translate")
 
-	testSuite.Contains(testSuite.dictionary.WordMap(), "word")
+	testSuite.Contains(testSuite.dictionary.WordMap(), word)
 	testSuite.NoError(err)
 }
 

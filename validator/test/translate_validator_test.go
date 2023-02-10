@@ -31,8 +31,8 @@ func (testSuite *ValidateTranslateTestSuite) Test_ValidateTranslate_withValidTra
 func (testSuite *ValidateTranslateTestSuite) Test_ValidateTranslate_withInvalidTranslate_expectError() {
 	values := []string{"1232", ""}
 
-	for i := range values {
-		translate := values[i]
+	for _, value := range values {
+		translate := value
 		err := validator.ValidateTranslate(translate)
 
 		testSuite.Error(err)
