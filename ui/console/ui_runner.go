@@ -10,7 +10,7 @@ var helpMessage string = "Введите help - для помощи"
 
 // Запуск UI
 func RunUi() {
-	validator := validator.NewEnglishDictionaryValidator()
+	validator := validator.NewEnglishWordValidator()
 	dictionary := dictionary.NewDictionary(validator)
 
 	Println(helpMessage)

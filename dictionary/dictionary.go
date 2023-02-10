@@ -31,7 +31,7 @@ func (dictionary *Dictionary) AddWord(word, translate string) error {
 		return err
 	}
 
-	err = dictionary.validator.ValidateTranslate(translate)
+	err = validator.ValidateTranslate(translate)
 	if err != nil {
 		return err
 	}

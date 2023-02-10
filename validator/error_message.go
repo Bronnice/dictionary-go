@@ -1,7 +1,12 @@
 package validator
 
 var (
-	EmptyInputMessage  = "Введенное значение не может быть пустым!"
-	InvalidWordMessage = "Введенное значение не подходит по критерию словаря!"
-	WordIsLongMessage  = "Введенное значение длиннее, указанного в словаре размера!"
+	EmptyWordMessage   = "Слово не может быть пустым!"
+	InvalidWordMessage = "Слово не подходит по критерию словаря!"
+	WordIsLongMessage  = "Слово длиннее, указанного в словаре размера!"
+)
+
+var (
+	EmptyTranslateMessage   = "Перевод не может быть пустым!"
+	InvalidTranslateMessage = "Перевод не может состоять только из цифр!"
 )
