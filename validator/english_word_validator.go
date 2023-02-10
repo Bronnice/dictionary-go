@@ -3,7 +3,6 @@ package validator
 import (
 	"errors"
 	"regexp"
-	"strings"
 )
 
 // Реализация интерфейса Validator, только латинские буквы
@@ -20,7 +19,7 @@ func NewEnglishWordValidator() *EnglishWordValidator {
 
 // Проверяет подходит ли слово по критериям словаря (только английские символы, максимум 4 символа для слова)
 func (validator EnglishWordValidator) ValidateWord(word string) error {
-	if len(strings.TrimSpace(word)) == 0 {
+	if len(word) == 0 {
 		return errors.New(EmptyWordMessage)
 	}
 

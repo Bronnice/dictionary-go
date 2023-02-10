@@ -17,10 +17,15 @@ func Test_ValidateTranslateTestSuite(t *testing.T) {
 }
 
 func (testSuite *ValidateTranslateTestSuite) Test_ValidateTranslate_withValidTranslate_expectNoError() {
-	translate := "awdss"
-	err := validator.ValidateTranslate(translate)
+	values := []string{"example", "example with numbers 123"}
 
-	testSuite.NoError(err)
+	for i := range values {
+		translate := values[i]
+		err := validator.ValidateTranslate(translate)
+
+		testSuite.NoError(err)
+	}
+
 }
 
 func (testSuite *ValidateTranslateTestSuite) Test_ValidateTranslate_withInvalidTranslate_expectError() {

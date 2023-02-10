@@ -11,27 +11,32 @@ import (
 // Тесты для метода AddWord Dictionary
 type AddWordTestSuite struct {
 	testSuite.Suite
+	dictionary dictionary.Dictionary
 }
 
 func Test_AddWordTestSuite(t *testing.T) {
 	testSuite.Run(t, new(AddWordTestSuite))
 }
 
+func (testSuite *AddWordTestSuite) SetupTest() {
+	validator := validator.NewEnglishWordValidator()
+	testSuite.dictionary = *dictionary.NewDictionary(validator)
+}
+
 func (testSuite *AddWordTestSuite) Test_AddWord_withNewWord_expectNoError() {
-	dictionary := dictionary.NewDictionary(validator.NewEnglishWordValidator())
+	err := testSuite.dictionary.AddWord("word", "translate")
 
-	err := dictionary.AddWord("word", "translate")
-
+	testSuite.NotEmpty(testSuite.dictionary.WordMap())
 	testSuite.NoError(err)
 }
 
 func (testSuite *AddWordTestSuite) Test_AddWord_withAlreadyExistedWord_expectError() {
-	dictionary := dictionary.NewDictionary(validator.NewEnglishWordValidator())
 	word := "word"
+	translate := "translate"
 	var err error
 
 	for i := 0; i < 2; i++ {
-		err = dictionary.AddWord(word, "translate")
+		err = testSuite.dictionary.AddWord(word, translate)
 	}
 
 	testSuite.Error(err)
