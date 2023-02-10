@@ -25,19 +25,24 @@ func (testSuite *AddWordTestSuite) SetupTest() {
 
 func (testSuite *AddWordTestSuite) Test_AddWord_withNewWord_expectNoError() {
 	word := "word"
-	err := testSuite.dictionary.AddWord(word, "translate")
+	translate := "translate"
+	err := testSuite.dictionary.AddWord(word, translate)
 
 	testSuite.Contains(testSuite.dictionary.WordMap(), word)
+	testSuite.Contains(testSuite.dictionary.WordMap()[word], translate)
+
 	testSuite.NoError(err)
 }
 
 func (testSuite *AddWordTestSuite) Test_AddWord_withAlreadyExistedWord_expectError() {
 	word := "word"
+	translate := "translate"
 	var err error
 
 	for i := 0; i < 2; i++ {
-		err = testSuite.dictionary.AddWord(word, "translate")
+		err = testSuite.dictionary.AddWord(word, translate)
 	}
 	testSuite.Contains(testSuite.dictionary.WordMap(), word)
+	testSuite.Contains(testSuite.dictionary.WordMap()[word], translate)
 	testSuite.Error(err)
 }
