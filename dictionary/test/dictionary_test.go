@@ -30,7 +30,7 @@ func (testSuite *AddWordTestSuite) Test_AddWord_withNewWord_expectNoError() {
 
 	testSuite.Contains(testSuite.dictionary.WordMap(), word)
 	testSuite.Contains(testSuite.dictionary.WordMap()[word], translate)
-
+	testSuite.Equal(1, len(testSuite.dictionary.WordMap()))
 	testSuite.NoError(err)
 }
 
@@ -44,5 +44,6 @@ func (testSuite *AddWordTestSuite) Test_AddWord_withAlreadyExistedWord_expectErr
 	}
 	testSuite.Contains(testSuite.dictionary.WordMap(), word)
 	testSuite.Contains(testSuite.dictionary.WordMap()[word], translate)
+	testSuite.Equal(1, len(testSuite.dictionary.WordMap()))
 	testSuite.Error(err)
 }
