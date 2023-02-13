@@ -7,7 +7,7 @@ import (
 	testSuite "github.com/stretchr/testify/suite"
 )
 
-// Тесты для метода ValidateTranslate EnglishWordValidator`a
+// Тесты для метода ValidateWord EnglishWordValidator`a
 type EnglishValidateWordTestSuite struct {
 	testSuite.Suite
 	validator validator.EnglishWordValidator
@@ -21,14 +21,14 @@ func (testSuite *EnglishValidateWordTestSuite) SetupSuite() {
 	testSuite.validator = *validator.NewEnglishWordValidator()
 }
 
-func (testSuite *EnglishValidateWordTestSuite) Test_ValidateWord_withValidWord_expectNoError() {
+func (testSuite *EnglishValidateWordTestSuite) Test_EnglishValidateWord_withValidWord_expectNoError() {
 	word := "qwer"
 	err := testSuite.validator.ValidateWord(word)
 
 	testSuite.NoError(err)
 }
 
-func (testSuite *EnglishValidateWordTestSuite) Test_ValidateWord_withInvalidWord_expectError() {
+func (testSuite *EnglishValidateWordTestSuite) Test_EnglishValidateWord_withInvalidWord_expectError() {
 	words := []string{"1234", "qwert", "qwe1", "    ", "qwer123"}
 	var err error
 

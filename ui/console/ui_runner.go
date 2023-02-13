@@ -6,14 +6,16 @@ import (
 	"strings"
 )
 
-var helpMessage string = "Введите help - для помощи"
+var dictionaries []dictionary.Dictionary = []dictionary.Dictionary{
+	*dictionary.NewDictionary("English", validator.NewEnglishWordValidator()),
+	*dictionary.NewDictionary("Numbers", validator.NewNumberWordValidator()),
+}
+var chosenDictionary int = -1
 
 // Запуск UI
 func RunUi() {
-	validator := validator.NewEnglishWordValidator()
-	dictionary := dictionary.NewDictionary(validator)
-
 	Println(helpMessage)
+	switchCommand()
 	for {
 		input, err := ReadLine()
 		if err != nil {
@@ -27,11 +29,19 @@ func RunUi() {
 		case "help":
 			help()
 		case "print":
-			PrintDictionary(dictionary)
+			if chosenDictionary == -1 {
+				Println(chooseDictionaryMessage)
+				continue
+			}
+			PrintDictionary(&dictionaries[chosenDictionary])
 		case "switch":
-			Println("Work in progress")
+			switchCommand()
 		case "add":
-			add(dictionary)
+			if chosenDictionary == -1 {
+				Println(chooseDictionaryMessage)
+				continue
+			}
+			add(&dictionaries[chosenDictionary])
 		default:
 			Println("Неизвестная команда, " + helpMessage)
 		}
@@ -41,9 +51,8 @@ func RunUi() {
 // Отображение списка команд в коносль
 func help() {
 	Println("print  - просмотр словаря")
-	Println("list - список всех словарей")
 	Println("exit - прекратить работу")
-	Println("switch - переключить словарь")
+	Println("switch - выбрать словарь")
 	Println("add - добавить новую пару слово - перевод в словарь")
 }
 
@@ -70,4 +79,28 @@ func add(dictionary *dictionary.Dictionary) {
 	}
 
 	Println("Запись добавлена!")
+}
+
+func switchCommand() {
+	Println("Выберите словарь(введите его имя):")
+	for i := range dictionaries {
+		Println(dictionaries[i].Name())
+	}
+
+	input, err := ReadLine()
+	if err != nil {
+		Println(err.Error())
+	}
+
+	switch strings.ToLower(input) {
+	case "english":
+		chosenDictionary = 0
+		Println(chosenDictionaryMessage)
+	case "numbers":
+		chosenDictionary = 1
+		Println(chosenDictionaryMessage)
+	default:
+		chosenDictionary = -1
+		Println("Такого словаря не существует!")
+	}
 }

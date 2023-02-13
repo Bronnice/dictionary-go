@@ -7,16 +7,22 @@ import (
 
 // Словарь
 type Dictionary struct {
+	name      string
 	wordMap   map[string]string
 	validator validator.Validator
 }
 
 // Конструктор Dictionary
-func NewDictionary(validator validator.Validator) *Dictionary {
+func NewDictionary(name string, validator validator.Validator) *Dictionary {
 	return &Dictionary{
+		name:      name,
 		wordMap:   make(map[string]string),
 		validator: validator,
 	}
+}
+
+func (dictionary *Dictionary) Name() string {
+	return dictionary.name
 }
 
 // Получить список слов

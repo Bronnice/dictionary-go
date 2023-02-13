@@ -24,7 +24,7 @@ func (testSuite *AddWordTestSuite) SetupSuite() {
 }
 
 func (testSuite *AddWordTestSuite) SetupTest() {
-	testSuite.dictionary = *dictionary.NewDictionary(testSuite.validator)
+	testSuite.dictionary = *dictionary.NewDictionary("testDictionary", &testSuite.validator)
 }
 
 func (testSuite *AddWordTestSuite) Test_AddWord_withNewWord_expectNoError() {

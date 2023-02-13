@@ -10,7 +10,7 @@ type EnglishWordValidator struct {
 	wordCount int
 }
 
-// Конструктор для EnglishDictionaryValidator
+// Конструктор EnglishDictionaryValidator
 func NewEnglishWordValidator() *EnglishWordValidator {
 	return &EnglishWordValidator{
 		wordCount: 4,
@@ -18,7 +18,7 @@ func NewEnglishWordValidator() *EnglishWordValidator {
 }
 
 // Проверяет подходит ли слово по критериям словаря (только английские символы, максимум 4 символа для слова)
-func (validator EnglishWordValidator) ValidateWord(word string) error {
+func (validator *EnglishWordValidator) ValidateWord(word string) error {
 	if len(word) == 0 {
 		return errors.New(EmptyWordMessage)
 	}
