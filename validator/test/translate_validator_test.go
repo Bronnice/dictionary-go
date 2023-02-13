@@ -17,11 +17,11 @@ func Test_ValidateTranslateTestSuite(t *testing.T) {
 }
 
 func (testSuite *ValidateTranslateTestSuite) Test_ValidateTranslate_withValidTranslate_expectNoError() {
-	values := []string{"example", "example with numbers 123"}
+	translates := []string{"example", "example with numbers 123"}
+	var err error
 
-	for _, value := range values {
-		translate := value
-		err := validator.ValidateTranslate(translate)
+	for _, translate := range translates {
+		err = validator.ValidateTranslate(translate)
 
 		testSuite.NoError(err)
 	}
@@ -29,11 +29,11 @@ func (testSuite *ValidateTranslateTestSuite) Test_ValidateTranslate_withValidTra
 }
 
 func (testSuite *ValidateTranslateTestSuite) Test_ValidateTranslate_withInvalidTranslate_expectError() {
-	values := []string{"1232", ""}
+	translates := []string{"1232", ""}
+	var err error
 
-	for _, value := range values {
-		translate := value
-		err := validator.ValidateTranslate(translate)
+	for _, translate := range translates {
+		err = validator.ValidateTranslate(translate)
 
 		testSuite.Error(err)
 	}

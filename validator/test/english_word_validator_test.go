@@ -18,17 +18,17 @@ func Test_EnglishIsWordValidTestSuite(t *testing.T) {
 
 func (testSuite *EnglishValidateWordTestSuite) Test_ValidateWord_withValidWord_expectNoError() {
 	word := "qwer"
-	wordErr := validator.NewEnglishWordValidator().ValidateWord(word)
+	err := validator.NewEnglishWordValidator().ValidateWord(word)
 
-	testSuite.NoError(wordErr)
+	testSuite.NoError(err)
 }
 
 func (testSuite *EnglishValidateWordTestSuite) Test_ValidateWord_withInvalidWord_expectError() {
-	values := []string{"1234", "qwert", "qwe1", "    ", "qwer123"}
+	words := []string{"1234", "qwert", "qwe1", "    ", "qwer123"}
+	var err error
 
-	for _, value := range values {
-		word := value
-		err := validator.NewEnglishWordValidator().ValidateWord(word)
+	for _, word := range words {
+		err = validator.NewEnglishWordValidator().ValidateWord(word)
 
 		testSuite.Error(err)
 	}
