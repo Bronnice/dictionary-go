@@ -10,7 +10,7 @@ type NumberWordValidator struct {
 	wordCount int
 }
 
-// Конструктор для EnglishDictionaryValidator
+// Конструктор NumberDictionaryValidator
 func NewNumberWordValidator() *NumberWordValidator {
 	return &NumberWordValidator{
 		wordCount: 5,

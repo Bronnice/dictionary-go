@@ -10,7 +10,7 @@ var dictionaries []dictionary.Dictionary = []dictionary.Dictionary{
 	*dictionary.NewDictionary("English", validator.NewEnglishWordValidator()),
 	*dictionary.NewDictionary("Numbers", validator.NewNumberWordValidator()),
 }
-var chosenDictionary int = -1
+var chosenDictionary *dictionary.Dictionary = nil
 
 // Запуск UI
 func RunUi() {
@@ -29,19 +29,19 @@ func RunUi() {
 		case "help":
 			help()
 		case "print":
-			if chosenDictionary == -1 {
+			if chosenDictionary == nil {
 				Println(chooseDictionaryMessage)
 				continue
 			}
-			PrintDictionary(&dictionaries[chosenDictionary])
+			PrintDictionary(chosenDictionary)
 		case "switch":
 			switchCommand()
 		case "add":
-			if chosenDictionary == -1 {
+			if chosenDictionary == nil {
 				Println(chooseDictionaryMessage)
 				continue
 			}
-			add(&dictionaries[chosenDictionary])
+			add(chosenDictionary)
 		default:
 			Println("Неизвестная команда, " + helpMessage)
 		}
@@ -92,15 +92,13 @@ func switchCommand() {
 		Println(err.Error())
 	}
 
-	switch strings.ToLower(input) {
-	case "english":
-		chosenDictionary = 0
-		Println(chosenDictionaryMessage)
-	case "numbers":
-		chosenDictionary = 1
-		Println(chosenDictionaryMessage)
-	default:
-		chosenDictionary = -1
-		Println("Такого словаря не существует!")
+	for _, dictionary := range dictionaries {
+		if strings.EqualFold(strings.ToLower(input), strings.ToLower(dictionary.Name())) {
+			chosenDictionary = &dictionary
+			Println(chosenDictionaryMessage + dictionary.Name())
+			return
+		}
 	}
+	Println("Словаря не существует")
+	chosenDictionary = nil
 }
