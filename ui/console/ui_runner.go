@@ -10,12 +10,12 @@ var dictionaries []dictionary.Dictionary = []dictionary.Dictionary{
 	*dictionary.NewDictionary("English", validator.NewEnglishWordValidator()),
 	*dictionary.NewDictionary("Numbers", validator.NewNumberWordValidator()),
 }
-var chosenDictionary *dictionary.Dictionary = nil
+var selectedDictionary *dictionary.Dictionary = nil
 
 // Запуск UI
 func RunUi() {
-	Println(helpMessage)
-	switchCommand()
+	selectDictionary()
+	help()
 	for {
 		input, err := ReadLine()
 		if err != nil {
@@ -29,19 +29,19 @@ func RunUi() {
 		case "help":
 			help()
 		case "print":
-			if chosenDictionary == nil {
+			if selectedDictionary == nil {
 				Println(chooseDictionaryMessage)
 				continue
 			}
-			PrintDictionary(chosenDictionary)
-		case "switch":
-			switchCommand()
+			PrintDictionary(selectedDictionary)
+		case "select":
+			selectDictionary()
 		case "add":
-			if chosenDictionary == nil {
+			if selectedDictionary == nil {
 				Println(chooseDictionaryMessage)
 				continue
 			}
-			add(chosenDictionary)
+			add(selectedDictionary)
 		default:
 			Println("Неизвестная команда, " + helpMessage)
 		}
@@ -50,9 +50,10 @@ func RunUi() {
 
 // Отображение списка команд в коносль
 func help() {
+	Println("help  - список доступных команд")
 	Println("print  - просмотр словаря")
 	Println("exit - прекратить работу")
-	Println("switch - выбрать словарь")
+	Println("select - выбрать словарь")
 	Println("add - добавить новую пару слово - перевод в словарь")
 }
 
@@ -81,24 +82,24 @@ func add(dictionary *dictionary.Dictionary) {
 	Println("Запись добавлена!")
 }
 
-func switchCommand() {
-	Println("Выберите словарь(введите его имя):")
-	for i := range dictionaries {
-		Println(dictionaries[i].Name())
-	}
-
-	input, err := ReadLine()
-	if err != nil {
-		Println(err.Error())
-	}
-
-	for _, dictionary := range dictionaries {
-		if strings.EqualFold(strings.ToLower(input), strings.ToLower(dictionary.Name())) {
-			chosenDictionary = &dictionary
-			Println(chosenDictionaryMessage + dictionary.Name())
-			return
+func selectDictionary() {
+	for {
+		Println("\nВыберите словарь(введите его имя):")
+		for _, dictionary := range dictionaries {
+			Println(dictionary.Name())
 		}
+
+		input, err := ReadLine()
+		if err != nil {
+			Println(err.Error())
+		}
+		for _, dictionary := range dictionaries {
+			if strings.EqualFold(input, dictionary.Name()) {
+				selectedDictionary = &dictionary
+				Println(chosenDictionaryMessage + dictionary.Name())
+				return
+			}
+		}
+		Println("Cловарь не существует!")
 	}
-	Println("Словаря не существует")
-	chosenDictionary = nil
 }
