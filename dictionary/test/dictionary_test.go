@@ -12,15 +12,19 @@ import (
 type AddWordTestSuite struct {
 	testSuite.Suite
 	dictionary dictionary.Dictionary
+	validator  validator.EnglishWordValidator
 }
 
 func Test_AddWordTestSuite(t *testing.T) {
 	testSuite.Run(t, new(AddWordTestSuite))
 }
 
+func (testSuite *AddWordTestSuite) SetupSuite() {
+	testSuite.validator = *validator.NewEnglishWordValidator()
+}
+
 func (testSuite *AddWordTestSuite) SetupTest() {
-	validator := validator.NewEnglishWordValidator()
-	testSuite.dictionary = *dictionary.NewDictionary(validator)
+	testSuite.dictionary = *dictionary.NewDictionary(testSuite.validator)
 }
 
 func (testSuite *AddWordTestSuite) Test_AddWord_withNewWord_expectNoError() {
@@ -28,10 +32,10 @@ func (testSuite *AddWordTestSuite) Test_AddWord_withNewWord_expectNoError() {
 	translate := "translate"
 	err := testSuite.dictionary.AddWord(word, translate)
 
+	testSuite.NoError(err)
+	testSuite.Len(testSuite.dictionary.WordMap(), 1)
 	testSuite.Contains(testSuite.dictionary.WordMap(), word)
 	testSuite.Contains(testSuite.dictionary.WordMap()[word], translate)
-	testSuite.Equal(1, len(testSuite.dictionary.WordMap()))
-	testSuite.NoError(err)
 }
 
 func (testSuite *AddWordTestSuite) Test_AddWord_withAlreadyExistedWord_expectError() {
@@ -42,8 +46,9 @@ func (testSuite *AddWordTestSuite) Test_AddWord_withAlreadyExistedWord_expectErr
 	for i := 0; i < 2; i++ {
 		err = testSuite.dictionary.AddWord(word, translate)
 	}
+
+	testSuite.Error(err)
+	testSuite.Len(testSuite.dictionary.WordMap(), 1)
 	testSuite.Contains(testSuite.dictionary.WordMap(), word)
 	testSuite.Contains(testSuite.dictionary.WordMap()[word], translate)
-	testSuite.Equal(1, len(testSuite.dictionary.WordMap()))
-	testSuite.Error(err)
 }

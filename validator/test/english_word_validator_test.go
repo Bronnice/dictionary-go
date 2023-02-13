@@ -17,7 +17,7 @@ func Test_EnglishIsWordValidTestSuite(t *testing.T) {
 	testSuite.Run(t, new(EnglishValidateWordTestSuite))
 }
 
-func (testSuite *EnglishValidateWordTestSuite) SetupTest() {
+func (testSuite *EnglishValidateWordTestSuite) SetupSuite() {
 	testSuite.validator = *validator.NewEnglishWordValidator()
 }
 
