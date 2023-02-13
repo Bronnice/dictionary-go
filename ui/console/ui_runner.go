@@ -95,9 +95,8 @@ func selectDictionary() {
 		}
 		for _, dictionary := range dictionaries {
 			if strings.EqualFold(input, dictionary.Name()) {
-				selectedDictionary = &dictionary
 				Println(chosenDictionaryMessage + dictionary.Name())
-				return
+				*selectedDictionary = dictionary
 			}
 		}
 		Println("Cловарь не существует!")
