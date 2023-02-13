@@ -25,7 +25,6 @@ func (testSuite *ValidateTranslateTestSuite) Test_ValidateTranslate_withValidTra
 
 		testSuite.NoError(err)
 	}
-
 }
 
 func (testSuite *ValidateTranslateTestSuite) Test_ValidateTranslate_withInvalidTranslate_expectError() {
@@ -37,5 +36,4 @@ func (testSuite *ValidateTranslateTestSuite) Test_ValidateTranslate_withInvalidT
 
 		testSuite.Error(err)
 	}
-
 }

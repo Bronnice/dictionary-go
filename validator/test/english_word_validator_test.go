@@ -37,5 +37,4 @@ func (testSuite *EnglishValidateWordTestSuite) Test_ValidateWord_withInvalidWord
 
 		testSuite.Error(err)
 	}
-
 }
