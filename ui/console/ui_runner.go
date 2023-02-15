@@ -89,11 +89,11 @@ func selectDictionary() {
 		if err != nil {
 			Println(err.Error())
 		}
-		for _, dictionary := range *datasource.Dictionaries() {
-			if strings.EqualFold(input, dictionary.Name()) {
-				*selectedDictionary = dictionary
-				Println(chosenDictionaryMessage + dictionary.Name())
-			}
+
+		selectedDictionary = datasource.SelectDictionary(input)
+		if selectedDictionary != nil {
+			Println(chosenDictionaryMessage + selectedDictionary.Name())
+			return
 		}
 		Println("Cловарь не существует!")
 	}
