@@ -1,15 +1,11 @@
 package console
 
 import (
+	"dictionary-go/datasource"
 	"dictionary-go/dictionary"
-	"dictionary-go/validator"
 	"strings"
 )
 
-var dictionaries []dictionary.Dictionary = []dictionary.Dictionary{
-	*dictionary.NewDictionary("English", validator.NewEnglishWordValidator()),
-	*dictionary.NewDictionary("Numbers", validator.NewNumberWordValidator()),
-}
 var selectedDictionary *dictionary.Dictionary = nil
 
 // Запуск UI
@@ -85,7 +81,7 @@ func add(dictionary *dictionary.Dictionary) {
 func selectDictionary() {
 	for {
 		Println("\nВыберите словарь(введите его имя):")
-		for _, dictionary := range dictionaries {
+		for _, dictionary := range *datasource.Dictionaries() {
 			Println(dictionary.Name())
 		}
 
@@ -93,10 +89,10 @@ func selectDictionary() {
 		if err != nil {
 			Println(err.Error())
 		}
-		for _, dictionary := range dictionaries {
+		for _, dictionary := range *datasource.Dictionaries() {
 			if strings.EqualFold(input, dictionary.Name()) {
-				Println(chosenDictionaryMessage + dictionary.Name())
 				*selectedDictionary = dictionary
+				Println(chosenDictionaryMessage + dictionary.Name())
 			}
 		}
 		Println("Cловарь не существует!")
