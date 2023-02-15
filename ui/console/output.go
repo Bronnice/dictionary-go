@@ -14,6 +14,10 @@ func Println(str string) {
 func PrintDictionary(dictionary *dictionary.Dictionary) {
 	Println("Список слов:")
 	for word, translate := range dictionary.WordMap() {
-		Println(word + " - " + translate)
+		Printf("%s - %s\n", word, translate)
 	}
+}
+
+func Printf(str string, a ...any) {
+	fmt.Printf(str, a...)
 }

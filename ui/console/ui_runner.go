@@ -25,18 +25,10 @@ func RunUi() {
 		case "help":
 			help()
 		case "print":
-			if selectedDictionary == nil {
-				Println(chooseDictionaryMessage)
-				continue
-			}
 			PrintDictionary(selectedDictionary)
 		case "select":
 			selectDictionary()
 		case "add":
-			if selectedDictionary == nil {
-				Println(chooseDictionaryMessage)
-				continue
-			}
 			add(selectedDictionary)
 		default:
 			Println("Неизвестная команда, " + helpMessage)
@@ -80,21 +72,21 @@ func add(dictionary *dictionary.Dictionary) {
 
 func selectDictionary() {
 	for {
-		Println("\nВыберите словарь(введите его имя):")
-		for _, dictionary := range *datasource.Dictionaries() {
-			Println(dictionary.Name())
-		}
+		Println("Выберите словарь(введите его имя):")
+		Println(datasource.DictionariesNames())
 
 		input, err := ReadLine()
 		if err != nil {
 			Println(err.Error())
-		}
-
-		selectedDictionary = datasource.SelectDictionary(input)
-		if selectedDictionary != nil {
-			Println(chosenDictionaryMessage + selectedDictionary.Name())
 			return
 		}
+
+		selectedDictionary = datasource.GetDictionaryRefByName(input)
+		if selectedDictionary != nil {
+			Printf(chosenDictionaryMessage, selectedDictionary.Name())
+			return
+		}
+
 		Println("Cловарь не существует!")
 	}
 }
