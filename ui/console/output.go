@@ -14,13 +14,15 @@ func Println(a ...any) {
 func PrintDictionary(dictionary *dictionary.Dictionary) {
 	Println("Список слов:")
 	for word, translate := range dictionary.WordMap() {
-		Printf("%s - %s", word, translate)
-		Println()
+		Println(Sprintf("%s - %s", word, translate))
 	}
 }
 
 // Форматированный вывод строки в консоль
 func Printf(str string, a ...any) {
 	fmt.Printf(str, a...)
-	Println()
+}
+
+func Sprintf(format string, a ...any) string {
+	return fmt.Sprintf(format, a...)
 }
