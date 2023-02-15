@@ -22,10 +22,10 @@ func GetDictionaryByName(name string) *dictionary.Dictionary {
 }
 
 // Возвращает все имена доступных словарей
-func GetDictionariesNames() [2]string {
-	var str [2]string
+func GetDictionariesNames() []string {
+	dictionaryNames := make([]string, len(dictionaries))
 	for i, dictionary := range dictionaries {
-		str[i] = dictionary.Name()
+		dictionaryNames[i] = dictionary.Name()
 	}
-	return str
+	return dictionaryNames
 }

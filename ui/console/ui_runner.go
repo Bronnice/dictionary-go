@@ -31,7 +31,7 @@ func RunUi() {
 		case "add":
 			add(selectedDictionary)
 		default:
-			Println("Неизвестная команда,", helpMessage)
+			PrintlnFormatted("Неизвестная команда, %s", helpMessage)
 		}
 	}
 }
@@ -85,7 +85,7 @@ func selectDictionary() {
 
 		selectedDictionary = datasource.GetDictionaryByName(input)
 		if selectedDictionary != nil {
-			Println(Sprintf(chosenDictionaryMessagePattern, selectedDictionary.Name()))
+			PrintlnFormatted(chosenDictionaryMessagePattern, selectedDictionary.Name())
 			return
 		}
 
