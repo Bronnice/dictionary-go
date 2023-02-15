@@ -21,6 +21,7 @@ func NewDictionary(name string, validator validator.Validator) *Dictionary {
 	}
 }
 
+// Возвращает имя словаря
 func (dictionary *Dictionary) Name() string {
 	return dictionary.name
 }

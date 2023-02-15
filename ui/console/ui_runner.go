@@ -73,7 +73,9 @@ func add(dictionary *dictionary.Dictionary) {
 func selectDictionary() {
 	for {
 		Println("Выберите словарь(введите его имя):")
-		Println(datasource.DictionariesNames())
+		for _, dictionaryName := range datasource.GetDictionariesNames() {
+			Println(dictionaryName)
+		}
 
 		input, err := ReadLine()
 		if err != nil {
@@ -81,9 +83,9 @@ func selectDictionary() {
 			return
 		}
 
-		selectedDictionary = datasource.GetDictionaryRefByName(input)
+		selectedDictionary = datasource.GetDictionaryByName(input)
 		if selectedDictionary != nil {
-			Printf(chosenDictionaryMessage, selectedDictionary.Name())
+			Printf(chosenDictionaryMessagePattern, selectedDictionary.Name())
 			return
 		}
 

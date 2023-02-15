@@ -2,6 +2,6 @@ package console
 
 // Сообщения ConsoleUI
 var (
-	helpMessage             string = "Введите help - для помощи"
-	chosenDictionaryMessage string = "Выбран словарь: %s"
+	helpMessage                    string = "Введите help - для помощи"
+	chosenDictionaryMessagePattern string = "Выбран словарь: %s"
 )

@@ -6,18 +6,21 @@ import (
 )
 
 // Вывод строки в консоль
-func Println(str string) {
-	fmt.Println(str)
+func Println(a ...any) {
+	fmt.Println(a...)
 }
 
 // Форматированный вывод словаря в консоль
 func PrintDictionary(dictionary *dictionary.Dictionary) {
 	Println("Список слов:")
 	for word, translate := range dictionary.WordMap() {
-		Printf("%s - %s\n", word, translate)
+		Printf("%s - %s", word, translate)
+		Println()
 	}
 }
 
+// Форматированный вывод строки в консоль
 func Printf(str string, a ...any) {
 	fmt.Printf(str, a...)
+	Println()
 }

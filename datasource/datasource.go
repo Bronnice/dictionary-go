@@ -12,7 +12,7 @@ var dictionaries []dictionary.Dictionary = []dictionary.Dictionary{
 }
 
 // Находит словарь по имени и возвращает на него ссылку
-func GetDictionaryRefByName(name string) *dictionary.Dictionary {
+func GetDictionaryByName(name string) *dictionary.Dictionary {
 	for _, dictionary := range dictionaries {
 		if strings.EqualFold(name, dictionary.Name()) {
 			return &dictionary
@@ -22,10 +22,10 @@ func GetDictionaryRefByName(name string) *dictionary.Dictionary {
 }
 
 // Возвращает все имена доступных словарей
-func DictionariesNames() string {
-	str := ""
-	for _, dictionary := range dictionaries {
-		str += dictionary.Name() + " "
+func GetDictionariesNames() [2]string {
+	var str [2]string
+	for i, dictionary := range dictionaries {
+		str[i] = dictionary.Name()
 	}
 	return str
 }
