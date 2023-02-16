@@ -11,7 +11,13 @@ var selectedDictionary *dictionary.Dictionary = nil
 
 // Запуск UI
 func RunUi() {
-	selectDictionary()
+	for selectedDictionary == nil {
+		err := selectDictionary()
+		if err != nil {
+			Println(err.Error())
+		}
+	}
+
 	help()
 	for {
 		input, err := ReadLine()
@@ -29,7 +35,7 @@ func RunUi() {
 			PrintDictionary(selectedDictionary)
 		case "select":
 			for selectedDictionary == nil {
-				err = selectDictionary()
+				err := selectDictionary()
 				if err != nil {
 					Println(err.Error())
 				}
@@ -87,8 +93,8 @@ func selectDictionary() error {
 		return err
 	}
 
-	selectedDictionary = datasource.GetDictionaryByName(input)
-	if selectedDictionary != nil {
+	if datasource.GetDictionaryByName(input) != nil {
+		selectedDictionary = datasource.GetDictionaryByName(input)
 		PrintlnFormatted(chosenDictionaryMessagePattern, selectedDictionary.Name())
 		return nil
 	}

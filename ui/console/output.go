@@ -12,6 +12,7 @@ func Println(str ...any) {
 
 // Форматированный вывод словаря в консоль
 func PrintDictionary(dictionary *dictionary.Dictionary) {
+	PrintlnFormatted("Словарь: %s", dictionary.Name())
 	Println("Список слов:")
 	for word, translate := range dictionary.WordMap() {
 		PrintlnFormatted("%s - %s", word, translate)
