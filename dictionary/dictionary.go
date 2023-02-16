@@ -52,3 +52,13 @@ func (dictionary *Dictionary) AddWord(word, translate string) error {
 	dictionary.wordMap[word] = translate
 	return nil
 }
+
+// Поиск перевода по слову(ключу)
+func (dictionary *Dictionary) SearchTranslateByWord(word string) *string {
+	for dictionaryWord, dictionaryTranslate := range dictionary.wordMap {
+		if dictionaryWord == word {
+			return &dictionaryTranslate
+		}
+	}
+	return nil
+}
