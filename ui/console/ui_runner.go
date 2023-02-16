@@ -3,7 +3,6 @@ package console
 import (
 	"dictionary-go/datasource"
 	"dictionary-go/dictionary"
-	"errors"
 	"strings"
 )
 
@@ -11,11 +10,9 @@ var selectedDictionary *dictionary.Dictionary = nil
 
 // Запуск UI
 func RunUi() {
-	for selectedDictionary == nil {
-		err := selectDictionary()
-		if err != nil {
-			Println(err.Error())
-		}
+	err := selectDictionary()
+	if err != nil {
+		Println(err.Error())
 	}
 
 	help()
@@ -34,11 +31,9 @@ func RunUi() {
 		case "print":
 			PrintDictionary(selectedDictionary)
 		case "select":
-			for selectedDictionary == nil {
-				err := selectDictionary()
-				if err != nil {
-					Println(err.Error())
-				}
+			err := selectDictionary()
+			if err != nil {
+				Println(err.Error())
 			}
 		case "add":
 			add(selectedDictionary)
@@ -83,21 +78,24 @@ func add(dictionary *dictionary.Dictionary) {
 }
 
 func selectDictionary() error {
-	Println("Выберите словарь(введите его имя):")
-	for _, dictionaryName := range datasource.GetDictionariesNames() {
-		Println(dictionaryName)
+	for {
+		Println("Выберите словарь(введите его имя):")
+		for _, dictionaryName := range datasource.GetDictionariesNames() {
+			Println(dictionaryName)
+		}
+
+		input, err := ReadLine()
+		if err != nil {
+			return err
+		}
+
+		if datasource.GetDictionaryByName(input) != nil {
+			selectedDictionary = datasource.GetDictionaryByName(input)
+			PrintlnFormatted(chosenDictionaryMessagePattern, selectedDictionary.Name())
+			return nil
+		}
+
+		Println("Словарь не существует!")
 	}
 
-	input, err := ReadLine()
-	if err != nil {
-		return err
-	}
-
-	if datasource.GetDictionaryByName(input) != nil {
-		selectedDictionary = datasource.GetDictionaryByName(input)
-		PrintlnFormatted(chosenDictionaryMessagePattern, selectedDictionary.Name())
-		return nil
-	}
-
-	return errors.New("словарь не существует")
 }
