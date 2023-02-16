@@ -71,16 +71,16 @@ func (testSuite *DictionaryTestSuite) Test_SearchTranslateByWord_withNonexistedW
 
 func (testSuite *DictionaryTestSuite) Test_DeletePairByWord_withExistedWord_expectNoError() {
 	testSuite.dictionary.AddWord(testSuite.word, testSuite.translate)
-	testSuite.NotEmpty(testSuite.dictionary.wordMap)
 
 	err := testSuite.dictionary.DeletePairByWord(testSuite.word)
 	testSuite.NoError(err)
+	testSuite.Empty(testSuite.dictionary.wordMap)
 }
 
 func (testSuite *DictionaryTestSuite) Test_DeletePairByWord_withNonexistedWord_expectError() {
 	testSuite.dictionary.AddWord(testSuite.word, testSuite.translate)
-	testSuite.NotEmpty(testSuite.dictionary.wordMap)
 
 	err := testSuite.dictionary.DeletePairByWord("dorw")
 	testSuite.Error(err)
+	testSuite.NotEmpty(testSuite.dictionary.wordMap)
 }
