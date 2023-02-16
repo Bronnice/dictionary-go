@@ -86,7 +86,8 @@ func selectDictionary() error {
 
 		input, err := ReadLine()
 		if err != nil {
-			return err
+			Println(err.Error())
+			continue
 		}
 
 		if datasource.GetDictionaryByName(input) != nil {
@@ -97,5 +98,4 @@ func selectDictionary() error {
 
 		Println("Словарь не существует!")
 	}
-
 }
