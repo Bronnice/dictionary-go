@@ -1,19 +1,17 @@
 package console
 
 import (
+	"dictionary-go/datasource"
 	"dictionary-go/dictionary"
-	"dictionary-go/validator"
 	"strings"
 )
 
-var helpMessage string = "Введите help - для помощи"
+var selectedDictionary *dictionary.Dictionary = nil
 
 // Запуск UI
 func RunUi() {
-	validator := validator.NewEnglishWordValidator()
-	dictionary := dictionary.NewDictionary(validator)
-
-	Println(helpMessage)
+	selectDictionary()
+	help()
 	for {
 		input, err := ReadLine()
 		if err != nil {
@@ -27,23 +25,23 @@ func RunUi() {
 		case "help":
 			help()
 		case "print":
-			PrintDictionary(dictionary)
-		case "switch":
-			Println("Work in progress")
+			PrintDictionary(selectedDictionary)
+		case "select":
+			selectDictionary()
 		case "add":
-			add(dictionary)
+			add(selectedDictionary)
 		default:
-			Println("Неизвестная команда, " + helpMessage)
+			PrintlnFormatted("Неизвестная команда, %s", helpMessage)
 		}
 	}
 }
 
 // Отображение списка команд в коносль
 func help() {
+	Println("help  - список доступных команд")
 	Println("print  - просмотр словаря")
-	Println("list - список всех словарей")
 	Println("exit - прекратить работу")
-	Println("switch - переключить словарь")
+	Println("select - выбрать словарь")
 	Println("add - добавить новую пару слово - перевод в словарь")
 }
 
@@ -70,4 +68,27 @@ func add(dictionary *dictionary.Dictionary) {
 	}
 
 	Println("Запись добавлена!")
+}
+
+func selectDictionary() {
+	for {
+		Println("Выберите словарь(введите его имя):")
+		for _, dictionaryName := range datasource.GetDictionariesNames() {
+			Println(dictionaryName)
+		}
+
+		input, err := ReadLine()
+		if err != nil {
+			Println(err.Error())
+			continue
+		}
+
+		if datasource.GetDictionaryByName(input) != nil {
+			selectedDictionary = datasource.GetDictionaryByName(input)
+			PrintlnFormatted(chosenDictionaryMessagePattern, selectedDictionary.Name())
+			return
+		}
+
+		Println("Словарь не существует!")
+	}
 }

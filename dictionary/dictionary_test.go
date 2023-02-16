@@ -1,7 +1,6 @@
 package dictionary
 
 import (
-	"dictionary-go/dictionary"
 	"dictionary-go/validator"
 	"testing"
 
@@ -11,7 +10,7 @@ import (
 // Тесты для метода AddWord Dictionary
 type AddWordTestSuite struct {
 	testSuite.Suite
-	dictionary dictionary.Dictionary
+	dictionary Dictionary
 	validator  validator.EnglishWordValidator
 }
 
@@ -24,7 +23,7 @@ func (testSuite *AddWordTestSuite) SetupSuite() {
 }
 
 func (testSuite *AddWordTestSuite) SetupTest() {
-	testSuite.dictionary = *dictionary.NewDictionary(testSuite.validator)
+	testSuite.dictionary = *NewDictionary("testDictionary", &testSuite.validator)
 }
 
 func (testSuite *AddWordTestSuite) Test_AddWord_withNewWord_expectNoError() {
