@@ -54,11 +54,11 @@ func (dictionary *Dictionary) AddWord(word, translate string) error {
 }
 
 // Поиск перевода по слову(ключу)
-func (dictionary *Dictionary) SearchTranslateByWord(word string) string {
+func (dictionary *Dictionary) SearchTranslateByWord(word string) *string {
 	for dictionaryWord, dictionaryTranslate := range dictionary.wordMap {
 		if dictionaryWord == word {
-			return dictionaryTranslate
+			return &dictionaryTranslate
 		}
 	}
-	return ""
+	return nil
 }

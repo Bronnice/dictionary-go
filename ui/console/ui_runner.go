@@ -105,9 +105,9 @@ func search() {
 	}
 
 	output := selectedDictionary.SearchTranslateByWord(input)
-	if len(output) == 0 {
+	if output == nil {
 		Println("Слова не существует!")
 		return
 	}
-	PrintlnFormatted("Искомая пара: %s - %s", input, output)
+	PrintlnFormatted("Искомая пара: %s - %s", input, *output)
 }

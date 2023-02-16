@@ -7,7 +7,7 @@ import (
 	testSuite "github.com/stretchr/testify/suite"
 )
 
-// Тесты для метода AddWord Dictionary
+// Тесты для методов Dictionary
 type DictionaryTestSuite struct {
 	testSuite.Suite
 	dictionary Dictionary
@@ -31,7 +31,7 @@ func (testSuite *DictionaryTestSuite) SetupTest() {
 	testSuite.dictionary = *NewDictionary("testDictionary", &testSuite.validator)
 }
 
-func (testSuite *DictionaryTestSuite) Test_AddWord_withANewWord_expectNoError() {
+func (testSuite *DictionaryTestSuite) Test_AddWord_withNewWord_expectNoError() {
 	err := testSuite.dictionary.AddWord(testSuite.word, testSuite.translate)
 
 	testSuite.NoError(err)
@@ -53,20 +53,20 @@ func (testSuite *DictionaryTestSuite) Test_AddWord_withAlreadyExistedWord_expect
 	testSuite.Contains(testSuite.dictionary.WordMap()[testSuite.word], testSuite.translate)
 }
 
-func (testSuite *DictionaryTestSuite) Test_SearchPairByWord_withExistedWord_expectNoError() {
+func (testSuite *DictionaryTestSuite) Test_SearchTranslateByWord_withExistedWord_expectNotNil() {
 	err := testSuite.dictionary.AddWord(testSuite.word, testSuite.translate)
 	desiredTranslate := testSuite.dictionary.SearchTranslateByWord(testSuite.word)
 
 	testSuite.NoError(err)
-	testSuite.NotEmpty(desiredTranslate)
+	testSuite.NotNil(desiredTranslate)
 }
 
-func (testSuite *DictionaryTestSuite) Test_SearchPairByWord_withNonexistedWord_expectError() {
+func (testSuite *DictionaryTestSuite) Test_SearchTranslateByWord_withNonexistedWord_expectNil() {
 	name := "dorw"
 
 	err := testSuite.dictionary.AddWord(testSuite.word, testSuite.translate)
 	desiredTranslate := testSuite.dictionary.SearchTranslateByWord(name)
 
 	testSuite.NoError(err)
-	testSuite.Empty(desiredTranslate)
+	testSuite.Nil(desiredTranslate)
 }
