@@ -3,6 +3,7 @@ package dictionary
 import (
 	"dictionary-go/validator"
 	"errors"
+	"fmt"
 )
 
 // Словарь
@@ -51,4 +52,14 @@ func (dictionary *Dictionary) AddWord(word, translate string) error {
 
 	dictionary.wordMap[word] = translate
 	return nil
+}
+
+// Поиск пары слово - перевод по слову(ключу)
+func (dictionary *Dictionary) SearchPairByWord(word string) (string, error) {
+	for dictionaryWord, dictionaryTranslate := range dictionary.wordMap {
+		if dictionaryWord == word {
+			return fmt.Sprintf("%s - %s", word, dictionaryTranslate), nil
+		}
+	}
+	return "", errors.New("слова нет в словаре")
 }

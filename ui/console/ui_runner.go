@@ -30,6 +30,8 @@ func RunUi() {
 			selectDictionary()
 		case "add":
 			add(selectedDictionary)
+		case "search":
+			search()
 		default:
 			PrintlnFormatted("Неизвестная команда, %s", helpMessage)
 		}
@@ -43,6 +45,7 @@ func help() {
 	Println("exit - прекратить работу")
 	Println("select - выбрать словарь")
 	Println("add - добавить новую пару слово - перевод в словарь")
+	Println("search - поиск пары слово-перевод по слову в выбранном словаре")
 }
 
 // Добавление новой пары в словарь
@@ -91,4 +94,20 @@ func selectDictionary() {
 
 		Println("Словарь не существует!")
 	}
+}
+
+func search() {
+	Println("Введите слово:")
+	input, err := ReadLine()
+	if err != nil {
+		Println(err.Error())
+		return
+	}
+
+	output, err := selectedDictionary.SearchPairByWord(input)
+	if err != nil {
+		Println(err.Error())
+		return
+	}
+	PrintlnFormatted("Искомая пара: %s", output)
 }
