@@ -22,10 +22,13 @@ func Test_DictionaryTestSuite(t *testing.T) {
 
 func (testSuite *DictionaryTestSuite) SetupSuite() {
 	testSuite.validator = *validator.NewEnglishWordValidator()
-	testSuite.dictionary = *NewDictionary("testDictionary", &testSuite.validator)
 
 	testSuite.word = "word"
 	testSuite.translate = "translate"
+}
+
+func (testSuite *DictionaryTestSuite) SetupTest() {
+	testSuite.dictionary = *NewDictionary("testDictionary", &testSuite.validator)
 }
 
 func (testSuite *DictionaryTestSuite) Test_AddWord_withANewWord_expectNoError() {
@@ -38,7 +41,11 @@ func (testSuite *DictionaryTestSuite) Test_AddWord_withANewWord_expectNoError() 
 }
 
 func (testSuite *DictionaryTestSuite) Test_AddWord_withAlreadyExistedWord_expectError() {
-	err := testSuite.dictionary.AddWord(testSuite.word, testSuite.translate)
+	var err error
+
+	for i := 0; i < 2; i++ {
+		err = testSuite.dictionary.AddWord(testSuite.word, testSuite.translate)
+	}
 
 	testSuite.Error(err)
 	testSuite.Len(testSuite.dictionary.WordMap(), 1)
@@ -47,17 +54,19 @@ func (testSuite *DictionaryTestSuite) Test_AddWord_withAlreadyExistedWord_expect
 }
 
 func (testSuite *DictionaryTestSuite) Test_SearchPairByWord_withExistedWord_expectNoError() {
-	pair, err := testSuite.dictionary.SearchPairByWord(testSuite.word)
+	err := testSuite.dictionary.AddWord(testSuite.word, testSuite.translate)
+	desiredTranslate := testSuite.dictionary.SearchPairByWord(testSuite.word)
 
 	testSuite.NoError(err)
-	testSuite.NotEmpty(pair)
+	testSuite.NotEmpty(desiredTranslate)
 }
 
 func (testSuite *DictionaryTestSuite) Test_SearchPairByWord_withNonexistedWord_expectError() {
 	name := "dorw"
 
-	pair, err := testSuite.dictionary.SearchPairByWord(name)
+	err := testSuite.dictionary.AddWord(testSuite.word, testSuite.translate)
+	desiredTranslate := testSuite.dictionary.SearchPairByWord(name)
 
-	testSuite.Error(err)
-	testSuite.Empty(pair)
+	testSuite.NoError(err)
+	testSuite.Empty(desiredTranslate)
 }

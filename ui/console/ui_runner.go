@@ -104,10 +104,10 @@ func search() {
 		return
 	}
 
-	output, err := selectedDictionary.SearchPairByWord(input)
-	if err != nil {
-		Println(err.Error())
+	output := selectedDictionary.SearchPairByWord(input)
+	if len(output) == 0 {
+		Println("Слова не существует!")
 		return
 	}
-	PrintlnFormatted("Искомая пара: %s", output)
+	PrintlnFormatted("Искомая пара: %s - %s", input, output)
 }
