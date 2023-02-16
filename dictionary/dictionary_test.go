@@ -70,3 +70,23 @@ func (testSuite *DictionaryTestSuite) Test_SearchTranslateByWord_withNonexistedW
 	testSuite.NoError(err)
 	testSuite.Nil(desiredTranslate)
 }
+
+func (testSuite *DictionaryTestSuite) Test_DeletePairByWord_withExistedWord_expectNoError() {
+	name := "word"
+
+	err := testSuite.dictionary.AddWord(testSuite.word, testSuite.translate)
+	testSuite.NoError(err)
+
+	err = testSuite.dictionary.DeletePairByWord(name)
+	testSuite.NoError(err)
+}
+
+func (testSuite *DictionaryTestSuite) Test_DeletePairByWord_withNonxistedWord_expectError() {
+	name := "dorw"
+
+	err := testSuite.dictionary.AddWord(testSuite.word, testSuite.translate)
+	testSuite.NoError(err)
+
+	err = testSuite.dictionary.DeletePairByWord(name)
+	testSuite.Error(err)
+}
