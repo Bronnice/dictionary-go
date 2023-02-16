@@ -104,7 +104,7 @@ func search() {
 		return
 	}
 
-	output := selectedDictionary.SearchPairByWord(input)
+	output := selectedDictionary.SearchTranslateByWord(input)
 	if len(output) == 0 {
 		Println("Слова не существует!")
 		return

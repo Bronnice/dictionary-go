@@ -55,7 +55,7 @@ func (testSuite *DictionaryTestSuite) Test_AddWord_withAlreadyExistedWord_expect
 
 func (testSuite *DictionaryTestSuite) Test_SearchPairByWord_withExistedWord_expectNoError() {
 	err := testSuite.dictionary.AddWord(testSuite.word, testSuite.translate)
-	desiredTranslate := testSuite.dictionary.SearchPairByWord(testSuite.word)
+	desiredTranslate := testSuite.dictionary.SearchTranslateByWord(testSuite.word)
 
 	testSuite.NoError(err)
 	testSuite.NotEmpty(desiredTranslate)
@@ -65,7 +65,7 @@ func (testSuite *DictionaryTestSuite) Test_SearchPairByWord_withNonexistedWord_e
 	name := "dorw"
 
 	err := testSuite.dictionary.AddWord(testSuite.word, testSuite.translate)
-	desiredTranslate := testSuite.dictionary.SearchPairByWord(name)
+	desiredTranslate := testSuite.dictionary.SearchTranslateByWord(name)
 
 	testSuite.NoError(err)
 	testSuite.Empty(desiredTranslate)
