@@ -38,7 +38,7 @@ func (testSuite *DataSourceTestSuite) Test_GetDictionaryByName_withNotExistedNam
 	}
 }
 
-func (testSuite *DataSourceTestSuite) Test_GetDictionaryNames() {
+func (testSuite *DataSourceTestSuite) Test_GetDictionaryNames_expectEqualAndNotEmpty() {
 	dictionaryNames := GetDictionariesNames()
 
 	testSuite.NotEmpty(dictionaryNames)

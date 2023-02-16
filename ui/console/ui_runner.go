@@ -10,11 +10,7 @@ var selectedDictionary *dictionary.Dictionary = nil
 
 // Запуск UI
 func RunUi() {
-	err := selectDictionary()
-	if err != nil {
-		Println(err.Error())
-	}
-
+	selectDictionary()
 	help()
 	for {
 		input, err := ReadLine()
@@ -31,10 +27,7 @@ func RunUi() {
 		case "print":
 			PrintDictionary(selectedDictionary)
 		case "select":
-			err := selectDictionary()
-			if err != nil {
-				Println(err.Error())
-			}
+			selectDictionary()
 		case "add":
 			add(selectedDictionary)
 		default:
@@ -77,7 +70,7 @@ func add(dictionary *dictionary.Dictionary) {
 	Println("Запись добавлена!")
 }
 
-func selectDictionary() error {
+func selectDictionary() {
 	for {
 		Println("Выберите словарь(введите его имя):")
 		for _, dictionaryName := range datasource.GetDictionariesNames() {
@@ -93,7 +86,7 @@ func selectDictionary() error {
 		if datasource.GetDictionaryByName(input) != nil {
 			selectedDictionary = datasource.GetDictionaryByName(input)
 			PrintlnFormatted(chosenDictionaryMessagePattern, selectedDictionary.Name())
-			return nil
+			return
 		}
 
 		Println("Словарь не существует!")
