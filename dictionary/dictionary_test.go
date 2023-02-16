@@ -8,46 +8,56 @@ import (
 )
 
 // Тесты для метода AddWord Dictionary
-type AddWordTestSuite struct {
+type DictionaryTestSuite struct {
 	testSuite.Suite
 	dictionary Dictionary
 	validator  validator.EnglishWordValidator
+	word       string
+	translate  string
 }
 
-func Test_AddWordTestSuite(t *testing.T) {
-	testSuite.Run(t, new(AddWordTestSuite))
+func Test_DictionaryTestSuite(t *testing.T) {
+	testSuite.Run(t, new(DictionaryTestSuite))
 }
 
-func (testSuite *AddWordTestSuite) SetupSuite() {
+func (testSuite *DictionaryTestSuite) SetupSuite() {
 	testSuite.validator = *validator.NewEnglishWordValidator()
-}
-
-func (testSuite *AddWordTestSuite) SetupTest() {
 	testSuite.dictionary = *NewDictionary("testDictionary", &testSuite.validator)
+
+	testSuite.word = "word"
+	testSuite.translate = "translate"
 }
 
-func (testSuite *AddWordTestSuite) Test_AddWord_withNewWord_expectNoError() {
-	word := "word"
-	translate := "translate"
-	err := testSuite.dictionary.AddWord(word, translate)
+func (testSuite *DictionaryTestSuite) Test_AddWord_withANewWord_expectNoError() {
+	err := testSuite.dictionary.AddWord(testSuite.word, testSuite.translate)
 
 	testSuite.NoError(err)
 	testSuite.Len(testSuite.dictionary.WordMap(), 1)
-	testSuite.Contains(testSuite.dictionary.WordMap(), word)
-	testSuite.Contains(testSuite.dictionary.WordMap()[word], translate)
+	testSuite.Contains(testSuite.dictionary.WordMap(), testSuite.word)
+	testSuite.Contains(testSuite.dictionary.WordMap()[testSuite.word], testSuite.translate)
 }
 
-func (testSuite *AddWordTestSuite) Test_AddWord_withAlreadyExistedWord_expectError() {
-	word := "word"
-	translate := "translate"
-	var err error
-
-	for i := 0; i < 2; i++ {
-		err = testSuite.dictionary.AddWord(word, translate)
-	}
+func (testSuite *DictionaryTestSuite) Test_AddWord_withAlreadyExistedWord_expectError() {
+	err := testSuite.dictionary.AddWord(testSuite.word, testSuite.translate)
 
 	testSuite.Error(err)
 	testSuite.Len(testSuite.dictionary.WordMap(), 1)
-	testSuite.Contains(testSuite.dictionary.WordMap(), word)
-	testSuite.Contains(testSuite.dictionary.WordMap()[word], translate)
+	testSuite.Contains(testSuite.dictionary.WordMap(), testSuite.word)
+	testSuite.Contains(testSuite.dictionary.WordMap()[testSuite.word], testSuite.translate)
+}
+
+func (testSuite *DictionaryTestSuite) Test_SearchPairByWord_withExistedWord_expectNoError() {
+	pair, err := testSuite.dictionary.SearchPairByWord(testSuite.word)
+
+	testSuite.NoError(err)
+	testSuite.NotEmpty(pair)
+}
+
+func (testSuite *DictionaryTestSuite) Test_SearchPairByWord_withNonexistedWord_expectError() {
+	name := "dorw"
+
+	pair, err := testSuite.dictionary.SearchPairByWord(name)
+
+	testSuite.Error(err)
+	testSuite.Empty(pair)
 }
