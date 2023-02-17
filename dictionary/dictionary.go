@@ -62,3 +62,14 @@ func (dictionary *Dictionary) SearchTranslateByWord(word string) *string {
 	}
 	return nil
 }
+
+// Удаляет слово и перевод по слову
+func (dictionary *Dictionary) DeletePairByWord(word string) error {
+	for dictionaryWord := range dictionary.wordMap {
+		if dictionaryWord == word {
+			delete(dictionary.wordMap, word)
+			return nil
+		}
+	}
+	return errors.New("слова не существует")
+}

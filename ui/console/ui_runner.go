@@ -32,6 +32,8 @@ func RunUi() {
 			add(selectedDictionary)
 		case "search":
 			search()
+		case "delete":
+			delete()
 		default:
 			PrintlnFormatted("Неизвестная команда, %s", helpMessage)
 		}
@@ -46,6 +48,7 @@ func help() {
 	Println("select - выбрать словарь")
 	Println("add - добавить новую пару слово - перевод в словарь")
 	Println("search - поиск пары слово-перевод по слову в выбранном словаре")
+	Println("delete - удалить пару слово-перевод по слову в выбранном словаре")
 }
 
 // Добавление новой пары в словарь
@@ -110,4 +113,20 @@ func search() {
 		return
 	}
 	PrintlnFormatted("Искомая пара: %s - %s", input, *output)
+}
+
+func delete() {
+	Println("Введите слово:")
+	input, err := ReadLine()
+	if err != nil {
+		Println(err.Error())
+		return
+	}
+
+	err = selectedDictionary.DeletePairByWord(input)
+	if err != nil {
+		Println(err.Error())
+		return
+	}
+	Println("Слово и перевод удалены!")
 }

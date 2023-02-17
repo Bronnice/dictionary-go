@@ -54,19 +54,33 @@ func (testSuite *DictionaryTestSuite) Test_AddWord_withAlreadyExistedWord_expect
 }
 
 func (testSuite *DictionaryTestSuite) Test_SearchTranslateByWord_withExistedWord_expectNotNil() {
-	err := testSuite.dictionary.AddWord(testSuite.word, testSuite.translate)
-	desiredTranslate := testSuite.dictionary.SearchTranslateByWord(testSuite.word)
+	testSuite.dictionary.AddWord(testSuite.word, testSuite.translate)
+	expectedTranslate := testSuite.dictionary.SearchTranslateByWord(testSuite.word)
 
-	testSuite.NoError(err)
-	testSuite.NotNil(desiredTranslate)
+	testSuite.NotNil(expectedTranslate)
 }
 
 func (testSuite *DictionaryTestSuite) Test_SearchTranslateByWord_withNonexistedWord_expectNil() {
 	name := "dorw"
 
-	err := testSuite.dictionary.AddWord(testSuite.word, testSuite.translate)
-	desiredTranslate := testSuite.dictionary.SearchTranslateByWord(name)
+	testSuite.dictionary.AddWord(testSuite.word, testSuite.translate)
+	expectedTranslate := testSuite.dictionary.SearchTranslateByWord(name)
 
+	testSuite.Nil(expectedTranslate)
+}
+
+func (testSuite *DictionaryTestSuite) Test_DeletePairByWord_withExistedWord_expectNoError() {
+	testSuite.dictionary.AddWord(testSuite.word, testSuite.translate)
+
+	err := testSuite.dictionary.DeletePairByWord(testSuite.word)
 	testSuite.NoError(err)
-	testSuite.Nil(desiredTranslate)
+	testSuite.Empty(testSuite.dictionary.wordMap)
+}
+
+func (testSuite *DictionaryTestSuite) Test_DeletePairByWord_withNonexistedWord_expectError() {
+	testSuite.dictionary.AddWord(testSuite.word, testSuite.translate)
+
+	err := testSuite.dictionary.DeletePairByWord("dorw")
+	testSuite.Error(err)
+	testSuite.NotEmpty(testSuite.dictionary.wordMap)
 }
