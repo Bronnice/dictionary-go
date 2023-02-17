@@ -64,9 +64,9 @@ func (testSuite *DictionaryTestSuite) Test_SearchTranslateByWord_withNonexistedW
 	name := "dorw"
 
 	testSuite.dictionary.AddWord(testSuite.word, testSuite.translate)
-	desiredTranslate := testSuite.dictionary.SearchTranslateByWord(name)
+	expectedTranslate := testSuite.dictionary.SearchTranslateByWord(name)
 
-	testSuite.Nil(desiredTranslate)
+	testSuite.Nil(expectedTranslate)
 }
 
 func (testSuite *DictionaryTestSuite) Test_DeletePairByWord_withExistedWord_expectNoError() {
