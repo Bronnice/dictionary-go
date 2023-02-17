@@ -55,9 +55,9 @@ func (testSuite *DictionaryTestSuite) Test_AddWord_withAlreadyExistedWord_expect
 
 func (testSuite *DictionaryTestSuite) Test_SearchTranslateByWord_withExistedWord_expectNotNil() {
 	testSuite.dictionary.AddWord(testSuite.word, testSuite.translate)
-	desiredTranslate := testSuite.dictionary.SearchTranslateByWord(testSuite.word)
+	expectedTranslate := testSuite.dictionary.SearchTranslateByWord(testSuite.word)
 
-	testSuite.NotNil(desiredTranslate)
+	testSuite.NotNil(expectedTranslate)
 }
 
 func (testSuite *DictionaryTestSuite) Test_SearchTranslateByWord_withNonexistedWord_expectNil() {
